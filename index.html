@@ -12,31 +12,35 @@
   <div class="app">
     <div class="bar">
       <h1>Repo Pricing Calculator<small>Repossessed unit worksheet</small></h1>
-      <div class="r"><button id="print" type="button">Print summary</button><button id="theme" type="button">Dark
-          mode</button><button id="reset" type="button">Load example</button><button id="clear" type="button">Clear
-          all</button></div>
+      <div class="r">
+        <button id="print" type="button">Print / Save PDF</button>
+        <button id="theme" type="button">Dark mode</button>
+        <button id="reset" type="button">Load example</button>
+        <button id="clear" type="button">Clear all</button>
+      </div>
     </div>
+
     <div class="cols">
       <!-- Column 1: class + previous account -->
       <div class="col">
         <div class="card tile">
           <div class="big" id="overall">—</div>
-          <p>Overall class<br><b id="classDetail">Age – · Criteria –</b><br>Age and mileage are computed automatically.
-          </p>
+          <p>Overall class<br><b id="classDetail">Age – · Criteria –</b><br>Age and mileage are computed automatically
+            from exact dates and odometer.</p>
         </div>
         <div class="card grow">
           <h2>Previous account</h2>
           <div class="g2">
-            <label class="s2">Name<input id="customerName" value="DAVA, JOHN LEXTER SEVILLA"></label>
-            <label>Engine no.<input id="engineNo" value="JA63E7364571"></label>
-            <label>Chassis no.<input id="chassisNo" value="K2VJ701118"></label>
-            <label>Odometer (km)<input id="odometer" type="number" min="0" value="21009"></label>
-            <label>Released to 1st owner<input id="releaseDate" type="date" value="2022-10-20"></label>
-            <label>Previous terms (mos)<input id="prevTerms" type="number" min="1" value="36"></label>
-            <label>No. of paid MA<input id="paidMA" type="number" min="0" value="0"></label>
-            <label>Previous MA (₱)<input id="prevMA" type="number" min="0" step="0.01" placeholder="0.00"></label>
-            <label>Rebate (₱)<input id="rebate" type="number" min="0" step="0.01" value="400"></label>
-            <label class="s2">New buyer’s name<input id="newBuyer" placeholder="Enter name"></label>
+            <label class="s2">Name<input id="customerName" placeholder="—"></label>
+            <label>Engine no.<input id="engineNo" placeholder="—"></label>
+            <label>Chassis no.<input id="chassisNo" placeholder="—"></label>
+            <label>Odometer (km)<input id="odometer" type="number" min="0" placeholder="—"></label>
+            <label>Released to 1st owner<input id="releaseDate" type="date" placeholder="—"></label>
+            <label>Previous terms (mos)<input id="prevTerms" type="number" min="1" placeholder="—"></label>
+            <label>No. of paid MA<input id="paidMA" type="number" min="0" placeholder="—"></label>
+            <label>Previous MA (₱)<input id="prevMA" type="number" min="0" step="0.01" placeholder="—"></label>
+            <label>Rebate (₱)<input id="rebate" type="number" min="0" step="0.01" placeholder="—"></label>
+            <label class="s2">New buyer's name<input id="newBuyer" placeholder="—"></label>
           </div>
         </div>
       </div>
@@ -46,18 +50,22 @@
         <div class="card">
           <h2>Unit pricing</h2>
           <div class="g3">
-            <label>Unit model<input id="unitModel" value="2021–22 CLICK 125"></label>
-            <label>Original SRP (₱)<input id="originalSRP" type="number" min="0" step="0.01" value="77500"></label>
-            <label>Selling price (₱)<input id="sellingPrice" type="number" min="0" step="0.01" value="56370"></label>
+            <label>Brand<input id="brand" placeholder="—"></label>
+            <label>Unit<input id="unit" placeholder="—"></label>
+            <label>Model<input id="model" placeholder="—"></label>
+            <label>Original SRP (₱)<input id="originalSRP" type="number" min="0" step="0.01" placeholder="—"></label>
+            <label class="s2">Selling price (₱) — auto<input id="sellingPrice" type="number" readonly
+                placeholder="—"></label>
           </div>
           <p class="note" id="discount"></p>
         </div>
+
         <div class="card">
           <h2>Unit evaluation</h2>
           <div class="crit" id="crit"></div>
-          <p class="note">Class labels are placeholders from the reference sheet. Confirm your company’s scoring rules
-            before using them for pricing decisions.</p>
+          <p class="note">Class labels follow the reference sheet. Age and mileage use exact date/odometer math.</p>
         </div>
+
         <div class="card grow">
           <h2>Comparison</h2>
           <div class="cmp">
@@ -68,9 +76,12 @@
               <div class="row"><span>Remaining payments</span><strong id="aTot">—</strong></div>
             </div>
             <div>
-              <h3>Regular / employee rate</h3>
-              <label style="margin-bottom:4px">Rate per month (%)<input id="empRate" type="number" min="0" max="20"
-                  step="0.01" value="0"></label>
+              <h3>Rate type</h3>
+              <span class="seg" id="rateType" style="margin-bottom:6px">
+                <button type="button" data-r="2.8" class="on">Customer 2.8%</button>
+                <button type="button" data-r="1.5">Employee 1.5%</button>
+              </span>
+              <div class="row"><span>Monthly rate</span><strong id="rateOut">—</strong></div>
               <div class="row"><span>Monthly payment</span><strong id="ePay">—</strong></div>
               <div class="row"><span>Total payments</span><strong id="eTot">—</strong></div>
               <div class="row"><span>Interest</span><strong id="eInt">—</strong></div>
@@ -84,19 +95,25 @@
         <div class="card">
           <h2>New computation</h2>
           <div class="g2">
-            <label>Down payment (₱)<input id="downPayment" type="number" min="0" step="0.01" value="0">
+            <label>Down payment (₱)<input id="downPayment" type="number" min="0" step="0.01" placeholder="—">
               <span class="chips" id="dpChips"></span></label>
-            <label>Terms (months)<input id="terms" type="number" min="1" max="120" value="36">
+            <label>Terms (months)<input id="terms" type="number" min="1" max="120" placeholder="—">
               <span class="chips" id="termChips"></span></label>
             <label>Monthly interest rate (%)<input id="mir" type="number" min="0" max="20" step="0.01"
-                value="2"></label>
+                placeholder="—"></label>
             <label>Interest method
-              <span class="seg" id="method"><button type="button" data-m="reducing" class="on">Reducing</button><button
-                  type="button" data-m="addon">Add-on</button></span></label>
-            <label>Monthly rebate (₱)<input id="monthlyRebate" type="number" min="0" step="0.01" value="400"></label>
-            <label>Target monthly amortization (₱)<input id="targetMA" type="number" min="0" step="0.01"></label>
+              <span class="seg" id="method">
+                <button type="button" data-m="reducing" class="on">Reducing</button>
+                <button type="button" data-m="addon">Add-on</button>
+              </span>
+            </label>
+            <label>Monthly rebate (₱)<input id="monthlyRebate" type="number" min="0" step="0.01"
+                placeholder="—"></label>
+            <label>Target monthly amortization (₱)<input id="targetMA" type="number" min="0" step="0.01"
+                placeholder="—"></label>
           </div>
         </div>
+
         <div class="card grow">
           <div class="hero"><span>Net amortization</span><strong id="net">—</strong></div>
           <div class="row"><span>Probable selling price<br><span class="sub" id="probNote">Enter a target MA to
@@ -106,6 +123,7 @@
           <div class="row"><span>Less: rebate</span><strong id="rebateOut">—</strong></div>
           <div class="row"><span>Total interest</span><strong id="interest">—</strong></div>
           <div class="row"><span>Effective annual rate</span><strong id="eir">—</strong></div>
+
           <h2 style="margin-top:12px">Compare terms <span
               style="text-transform:none;letter-spacing:0;font-weight:500">(click to apply)</span></h2>
           <table>
@@ -120,12 +138,12 @@
             <tbody id="termTable"></tbody>
           </table>
           <p class="note">Reducing balance uses the standard amortization formula; add-on charges interest on the full
-            amount for all months. Effective annual rate is solved from the actual payments. Results may differ from the
-            original workbook.</p>
+            amount for all months. Net amortization is the remaining principal / terms × (1 + monthly rate).</p>
         </div>
       </div>
     </div>
   </div>
+
   <section id="printSheet" class="print-only" aria-hidden="true"></section>
   <script src="app.js"></script>
 </body>
